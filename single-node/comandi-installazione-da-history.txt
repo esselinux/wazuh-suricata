@@ -1,0 +1,19 @@
+  129  sudo apt-get update
+  134  sudo apt install ./docker-desktop-amd64.deb 
+  140  sudo sysctl -w vm.max_map_count=262144
+  144  sudo usermod -aG docker sysadm
+  146  sudo apt install git
+  149  cd /opt/
+  150  git clone https://github.com/wazuh/wazuh-docker.git -b v4.12.0
+  151  sudo git clone https://github.com/wazuh/wazuh-docker.git -b v4.12.0
+  152  cd wazuh-docker/
+  153  cd single-node/
+  154  sudo docker compose -f generate-indexer-certs.yml run --rm generator
+  155  sudo docker compose up -d
+  158  sudo docker ps
+  160  wget https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.12.0-1_amd64.deb && sudo WAZUH_MANAGER='localhost' WAZUH_AGENT_NAME='macbook' dpkg -i ./wazuh-agent_4.12.0-1_amd64.deb
+  161  sudo wget https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.12.0-1_amd64.deb && sudo WAZUH_MANAGER='localhost' WAZUH_AGENT_NAME='macbook' dpkg -i ./wazuh-agent_4.12.0-1_amd64.deb
+  162  sudo systemctl daemon-reload
+  163  sudo systemctl enable wazuh-agent
+  164  sudo systemctl start wazuh-agent
+  165  sudo docker ps
